@@ -1,12 +1,16 @@
 const express = require("express");
+const morgan = require("morgan");
+const { nftRouter, userRouter } = require("./routes");
 
 const app = express();
-const port = 3005;
+app.use(express.json());
+process.env.NODE_ENV === "development" && app.use(morgan("dev"));
 
-app.get("/", (req, res) => {
-  res.send("hi");
-});
+app.use(express.static(`${__dirname}/data/img`));
 
-app.listen(port, () => {
-  console.log(`app running on port ${port}`);
-});
+const baseUrl = "/api/v1";
+
+app.use(`${baseUrl}/nft`, nftRouter);
+app.use(`${baseUrl}/user`, userRouter);
+
+module.exports = app;
