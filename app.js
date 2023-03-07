@@ -13,4 +13,11 @@ const baseUrl = "/api/v1";
 app.use(`${baseUrl}/nft`, nftRouter);
 app.use(`${baseUrl}/user`, userRouter);
 
+app.use("*", (req, res) => {
+  res.status(404).json({
+    status: "failed",
+    message: `Can't find ${req.originalUrl}`,
+  });
+});
+
 module.exports = app;
