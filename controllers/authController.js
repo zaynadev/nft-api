@@ -53,7 +53,7 @@ const isAuthenticated = async (req, res, next) => {
       ? await jwt.verify(token, process.env.JWT_SECRET)
       : { id: undefined, exp: undefined };
     const user = id ? await User.findById(id) : undefined;
-    const expired = exp ? Date.now() > exp : false;
+    const expired = exp ? Date.now() / 1000 > exp : false;
     if (!user || !expired) {
       const message = expired ? "Token expired" : "Invalid token";
       return res.status(400).json({
