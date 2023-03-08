@@ -56,7 +56,6 @@ const createNfts = async (req, res) => {
     const newNFT = await NFT.create(req.body);
     res.status(201).json({ status: "success", data: newNFT });
   } catch (error) {
-    console.log({ error });
     res
       .status(400)
       .json({ status: "failed", message: "error occured,  please try again!" });
